@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>sort with sortFunc</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.js"></script>
+	<script type="text/javascript" src="sortChildren.js"></script>
+	<script type="text/javascript">
+	var cmp=$.sortFunc([							// 3 sort keys
+		"$(this).hasClass('priority')::reverse",	// put priority items at the top
+		$.sortFunc.numeric,							// numeric $(this).text()
+		"$(this).data('owner')::reverse"			// sort attribute data-owner descending
+	])
+	jQuery(function($){
+		$('button').on('click',function(){			// when the button is clicked
+			$('ul').sortChildren(cmp)				// sort all UL's children
+		})
+	})
+	</script>
+	<style type="text/css">
+		.priority{color:red}
+		.priority:after
+		{
+			content: "*";
+			text-decoration: none;
+			vertical-align: super;
+			font-size:smaller;
+		}
+		li[data-owner]:before{
+			content:"(" attr(data-owner) ") "
+		}
+		ul,button{float:left}
+	</style>
+</head>
+<body>
+	<button>Sort</button>
+	<ul>
+		<li>41</li>
+		<li>4</li>
+		<li>2</li>
+		<li class="priority">3</li>
+		<li>1</li>
+		<li data-owner="Harpo">0</li>
+		<li data-owner="Chico">0</li>
+		<li data-owner="Zeppo">0</li>
+		<li data-owner="Groucho">0</li>
+		<li data-owner="Karl">0</li>
+	</ul>
+	<ul>
+		<li>88</li>
+		<li>65</li>
+		<li>12</li>
+		<li>11</li>
+		<li>011</li>
+		<li class="priority">special</li>
+		<li>11</li>
+		<li>9</li>
+		<li>11</li>
+		<li data-owner="Michael">5</li>
+		<li data-owner="Jackie">5</li>
+		<li data-owner="Tito">5</li>
+		<li data-owner="Marlon">5</li>
+		<li data-owner="Tito">5</li>
+	</ul>
+</body>
+</html>
