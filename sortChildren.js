@@ -33,7 +33,6 @@ $.fn.sortTable=function(){ // an example solution  for simple table sorting
         var sorts = $("thead th",this).map(function(i){
             return $.sortKeys.call(0,$(this).data("sort")||[{"childAlpha":i}])
         }).get()
-        console.log(sorts)
         $("thead th",this).click(function() {
             var tbody = $(this).closest("table").children("tbody"),
                 column = $(this).index(),
