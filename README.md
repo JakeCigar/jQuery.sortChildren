@@ -9,3 +9,5 @@ Usage
             $(this).nextAll("div").sortChildren($.sortFunc(["$(this).find('.name').text()"]))
         })
 ```
+Demo
+http://jakecigar.github.io/jQuery.sortChildren/
