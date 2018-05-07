@@ -34,6 +34,7 @@ $.fn.sortTable=function(){ // an example solution  for simple table sorting
             return $.sortKeys.call(0,$(this).data("sort")||[{"childAlpha":i}])
         }).get()
         $("thead th",this).click(function() {
+            if ($(this).hasClass("no-sort")) return
             var tbody = $(this).closest("table").children("tbody"),
                 column = $(this).index(),
                 alreadySorted = $(this).hasClass("sorted")
@@ -105,10 +106,10 @@ $.sortFunc=$.extend(function (sorts,options){
     reverseAlpha: "$(this).text()::reverse",
 
     childNumeric: function(i) {
-        return function(){ return  parseInt($.trim($(this).children().eq(i).text()))||0}
+        return function(){ return  parseInt($.trim($(this).children().eq(i).text()))}
     },
     childReverseNumeric: function(i) {
-        return function(){ return -parseInt($.trim($(this).children().eq(i).text()))||0}
+        return function(){ return -parseInt($.trim($(this).children().eq(i).text()))}
     },
     childAlpha: function(i) {
         return function(){ return           $.trim($(this).children().eq(i).text())}

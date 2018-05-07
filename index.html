@@ -168,15 +168,19 @@
             content:"⬇";
         }
         sort-by{display:none}
+        .no-sort
+        {
+            text-decoration: line-through;
+        }
     </style>
     <h2> Sort table </h2>
     <table class="dogSorting">
         <caption>
-            Table with sortable headings and a re-coded td
+            Table with sortable headings and a re-coded td and a no-sort th
         </caption>
         <thead>
             <tr>
-                <th>dog name</th>
+                <th class="no-sort">dog name</th>
                 <th data-sort='[{"childNumeric":1}]'>age</th>
                 <th data-sort='[{"childNumeric":2}]'>weight</th>
                 <th>Last Seen</th>
