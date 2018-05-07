@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Jquery.sortchildren by JakeCigar</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="http://code.jquery.com/jquery-1.11.3.js"></script>
-    <script src="https://cdn.rawgit.com/JakeCigar/jQuery.sortChildren/master/sortChildren.min.js"></script>
+<html>
+<head>
+    <title>SortChildren, a jQuery plugin</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="sortChildren.js"></script>
     <script>
     document.createElement("a-line")
+    document.createElement("sort-by")
     jQuery(function($) {
         $("section").each(function(i,section){
-            var t=$(this).html().replace(/</g,"&lt;").replace(/\n/g,"\n</a-line><a-line>")
+            var t=$(this).html().replace(/^\s*$/gm,"").replace(/</g,"&lt;").replace(/&quot;/g,"&amp;quot;").replace(/\n/g,"\n</a-line><a-line>")
             $("<code></code>",{html:t}).insertAfter( $("h2",section))
             $("h2",section).click(function(){
                 var thisCode=$(this).nextAll("code").toggle("fast")
@@ -62,19 +62,18 @@
     </style>
 </head>
 <body>
-<header>
-    <h1> SortChildren, a jQuery plugin</h1>
-</header>
+<h1> SortChildren, a jQuery plugin</h1>
 <section>
     <h2> Plugin downloads</h2>
     <ul>
-    <li><a href="https://github.com/JakeCigar/jQuery.sortChildren">View on GitHub</a></li>
+    <li><a href ="sortChildren.js" download="sortChildren.js">sortChildren.js</a></li>
+    <li><a href ="sortChildren.min.js" download="sortChildren.min.js">sortChildren.min.js</a></li>
     </ul>
 </section>
 <section>
     <style scoped>
         .priority { color: red; }
-        
+
         .priority:after
         {
             content: "*";
@@ -82,7 +81,7 @@
             vertical-align: super;
             font-size: smaller;
         }
-        
+
         li[data-owner]:before { content: "(" attr(data-owner) ") "; }
         ul { float: left; }
     </style>
@@ -134,7 +133,7 @@
 <section>
     <style scoped>
         table { border-collapse: collapse; }
-        
+
         table th
         {
             -moz-user-select: none;
@@ -143,14 +142,14 @@
             user-select: none;
             vertical-align: text-bottom;
         }
-        
+
         table td,table th
         {
             border: 1px solid;
             padding-right: 1em;
             padding-left: 1em;
         }
-        
+
         table thead tr { background: beige; }
         table .sorted { text-decoration: underline; }
         table th:after
@@ -168,28 +167,47 @@
         table th.reversed.sorted:after{
             content:"⬇";
         }
+        sort-by{display:none}
+        .no-sort
+        {
+            color: red;
+            text-decoration: line-through;
+        }
     </style>
     <h2> Sort table </h2>
     <table class="dogSorting">
         <caption>
-            Table with sortable headings
+            Table with sortable headings and a re-coded td and a no-sort th
         </caption>
         <thead>
             <tr>
-                <th>dog name</th>
+                <th class="no-sort">dog name</th>
                 <th data-sort='[{"childNumeric":1}]'>age</th>
                 <th data-sort='[{"childNumeric":2}]'>weight</th>
+                <th>Last Seen</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td>Sally</td><td>4</td><td>30lbs</td></tr>
-            <tr><td>Junior</td><td>9</td><td>19lbs</td></tr>
-            <tr><td>Manny</td><td>10</td><td>59lbs</td></tr>
+            <tr><td>Sally</td><td>4</td><td>30lbs</td><td>4 hours ago</td></tr>
+            <tr><td>Junior</td><td>9</td><td>19lbs</td><td>39 minutes ago</td></tr>
+            <tr><td>Manny</td><td>10</td><td>59lbs</td><td>2 days ago</td></tr>
+            <tr><td>Tim</td><td>5</td><td>159lbs</td><td>33 days ago</td></tr>
         </tbody>
     </table>
     <script>
     jQuery(function($) {
+        var now=new Date
+        $("table.dogSorting tr td:last-of-type").html(sortableDescription)
         $("table.dogSorting").sortTable()
+        function sortableDescription(i,str){
+            // converts a phrase like "1 minute ago" into a timestamp
+            var parts=str.split(" ")
+            var sortBy= now-(parts[1].match("day")? (parts[0] * 86400)
+                      : parts[1].match("hour")? (parts[0] * 3600)
+                      : parts[1].match("minute")? (parts[0] * 60)
+                      :0)
+            return '<sort-by>' + new Date(sortBy).toJSON() + '</sort-by>' + str
+        }
     })
     </script>
 </section>
@@ -218,6 +236,5 @@
     })
     </script>
 </section>
-
-  </body>
+</body>
 </html>

@@ -28,12 +28,13 @@ $.fn.sortChildren=function(options){
         self.prepend(first).append(last)
     })
 }
-$.fn.sortTable=function(){ // an example solution  for simple table sorting 
+$.fn.sortTable=function(){ // an example solution  for simple table sorting
     return this.each(function(){
         var sorts = $("thead th",this).map(function(i){
             return $.sortKeys.call(0,$(this).data("sort")||[{"childAlpha":i}])
         }).get()
         $("thead th",this).click(function() {
+            if ($(this).hasClass("no-sort")) return
             var tbody = $(this).closest("table").children("tbody"),
                 column = $(this).index(),
                 alreadySorted = $(this).hasClass("sorted")
@@ -58,7 +59,7 @@ $.sortKeys=function(a){ // easier way to build sort compare functions.
             return argument?$.sortFunc[argument](i):undefined
         }))
 }
-$.sortFunc=$.extend(function (sorts,options){ 
+$.sortFunc=$.extend(function (sorts,options){
     var options= options||[]
     var funcs=sorts.map(function(v){
             if ($.isFunction(v)){
@@ -85,7 +86,7 @@ $.sortFunc=$.extend(function (sorts,options){
             }
 //             console.log("sort",aV,bV,reverse)
             var reverse=options[i].reverse?-1:+1
-            if (aV < bV) 
+            if (aV < bV)
                 return -1*reverse
             else if (aV > bV)
                 return 1*reverse
@@ -109,7 +110,7 @@ $.sortFunc=$.extend(function (sorts,options){
     },
     childReverseNumeric: function(i) {
         return function(){ return -parseInt($.trim($(this).children().eq(i).text()))}
-    },	
+    },
     childAlpha: function(i) {
         return function(){ return           $.trim($(this).children().eq(i).text())}
     },
