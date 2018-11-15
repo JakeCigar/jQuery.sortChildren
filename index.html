@@ -1,24 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
 <head>
     <title>SortChildren, a jQuery plugin</title>
     <meta charset="utf-8" />
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="sortChildren.js"></script>
-    <script>
-    document.createElement("a-line")
-    document.createElement("sort-by")
-    jQuery(function($) {
-        $("section").each(function(i,section){
-            var t=$(this).html().replace(/^\s*$/gm,"").replace(/</g,"&lt;").replace(/&quot;/g,"&amp;quot;").replace(/\n/g,"\n</a-line><a-line>")
-            $("<code></code>",{html:t}).insertAfter( $("h2",section))
-            $("h2",section).click(function(){
-                var thisCode=$(this).nextAll("code").toggle("fast")
-                $("code").not(thisCode).hide("fast")
-            })
-        })
-    })
-    </script>
     <style>
         section{
             display:block;
@@ -60,6 +44,22 @@
         }
         button{ background-color:beige}
     </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="sortChildren.js"></script>
+    <script>
+    document.createElement("a-line")
+    document.createElement("sort-by")
+    jQuery(function($) {
+        $("section").each(function(i,section){
+            var t=$(this).html().replace(/^\s*$/gm,"").replace(/</g,"&lt;").replace(/&quot;/g,"&amp;quot;").replace(/\n/g,"\n</a-line><a-line>")
+            $("<code></code>",{html:t}).insertAfter( $("h2",section))
+            $("h2",section).click(function(){
+                var thisCode=$(this).nextAll("code").toggle("fast")
+                $("code").not(thisCode).hide("fast")
+            })
+        })
+    })
+    </script>
 </head>
 <body>
 <h1> SortChildren, a jQuery plugin</h1>
@@ -188,7 +188,7 @@
         </thead>
         <tbody>
             <tr><td>Sally</td><td>4</td><td>30lbs</td><td>4 hours ago</td></tr>
-            <tr><td>Junior</td><td>9</td><td>19lbs</td><td>39 minutes ago</td></tr>
+            <tr><td>Junior</td><td>12</td><td>18lbs</td><td>39 minutes ago</td></tr>
             <tr><td>Manny</td><td>10</td><td>59lbs</td><td>2 days ago</td></tr>
             <tr><td>Tim</td><td>5</td><td>159lbs</td><td>33 days ago</td></tr>
         </tbody>

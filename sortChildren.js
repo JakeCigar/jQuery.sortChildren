@@ -106,10 +106,10 @@ $.sortFunc=$.extend(function (sorts,options){
     reverseAlpha: "$(this).text()::reverse",
 
     childNumeric: function(i) {
-        return function(){ return  parseInt($.trim($(this).children().eq(i).text()))}
+        return function(){ return  parseFloat($.trim($(this).children().eq(i).text()))}
     },
     childReverseNumeric: function(i) {
-        return function(){ return -parseInt($.trim($(this).children().eq(i).text()))}
+        return function(){ return -parseFloat($.trim($(this).children().eq(i).text()))}
     },
     childAlpha: function(i) {
         return function(){ return           $.trim($(this).children().eq(i).text())}
